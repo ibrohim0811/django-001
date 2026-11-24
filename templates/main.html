@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitoblar ro'yxati</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0b0d10;
+            color: #f3f4f6;
+            padding: 32px 16px;
+        }
+        .container { max-width: 960px; margin: 0 auto; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            background: #2563eb;
+            color: #fff;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: #141820;
+            border: 1px solid #242b38;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #1f2532;
+        }
+        .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .title { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; }
+        .title:hover { color: #60a5fa; }
+        .about { font-size: 14px; color: #9ca3af; line-height: 1.45; }
+        .price { font-size: 16px; font-weight: 700; color: #34d399; margin-top: auto; padding-top: 8px; }
+        .actions { display: flex; gap: 12px; margin-top: 10px; font-size: 13px; }
+        .actions a { color: #93c5fd; text-decoration: none; }
+        .actions a.danger { color: #f87171; }
+        .empty { text-align: center; padding: 48px; background: #141820; border-radius: 12px; color: #9ca3af; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kitoblar</h1>
+            <a href="" class="btn">+ Yangi kitob</a>
+        </div>
+
+        {% if books %}
+            <div class="grid">
+                {% for book in books %}
+                    <div class="card">
+                        {% if book.image %}
+                            <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <a href="{% url 'book-detail' book.pk %}" class="title">{{ book.title }}</a>
+                            <p class="about">{{ book.about|truncatewords:20 }}</p>
+                            <div class="price">{{ book.price }} so'm</div>
+                            <div class="actions">
+                                <a href="">Ko'rish</a>
+                                <a href="">Tahrirlash</a>
+                                <a href="" class="danger">O'chirish</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty">Hozircha kitoblar qo'shilmagan.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

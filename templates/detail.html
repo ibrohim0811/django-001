@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0b0d10;
+            color: #f3f4f6;
+            padding: 32px 16px;
+        }
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: #141820;
+            border: 1px solid #242b38;
+            border-radius: 14px;
+            padding: 24px;
+        }
+        .back { display: inline-block; color: #93c5fd; text-decoration: none; margin-bottom: 18px; font-size: 14px; }
+        .cover {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 26px; margin-bottom: 10px; }
+        .price { font-size: 20px; font-weight: 700; color: #34d399; margin-bottom: 16px; }
+        .about { font-size: 15px; line-height: 1.65; color: #d1d5db; white-space: pre-line; margin-bottom: 24px; }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .btn-edit { background: #2563eb; color: #fff; }
+        .btn-delete { background: #dc2626; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'book-list' %}" class="back">← Ro'yxatga qaytish</a>
+
+        {% if book.image %}
+            <img src="{{ book.image.url }}" alt="{{ book.title }}" class="cover">
+        {% endif %}
+
+        <h1>{{ book.title }}</h1>
+        <div class="price">{{ book.price }} so'm</div>
+        <p class="about">{{ book.about }}</p>
+
+        <div class="actions">
+            <a href="{% url 'book-update' book.pk %}" class="btn btn-edit">Tahrirlash</a>
+            <a href="{% url 'book-delete' book.pk %}" class="btn btn-delete">O'chirish</a>
+        </div>
+    </div>
+</body>
+</html>
